@@ -8,18 +8,38 @@ namespace SongService.Controllers;
 
 [ApiController]
 [Route("/api/[controller]/[action]")]
-public class SongUploadController : ControllerBase
+public class SongFileController : ControllerBase
 {
     private readonly MinioService _minioService;
     private readonly ISongFileRepository _songFileRepository;
 
-    public SongUploadController(MinioService minioService, ISongFileRepository songFileRepository)
+    public SongFileController(MinioService minioService, ISongFileRepository songFileRepository)
     {
         _minioService = minioService;
         _songFileRepository = songFileRepository;
     }
+    
+    /// <summary>
+    /// Получить файлы аудиозаписей
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    [ProducesResponseType<List<SongFile>>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetSongs()
+    {
+        var songs = await _songFileRepository.GetAsync();
 
+        return Ok(songs);
+    }
+
+    /// <summary>
+    /// Загрузить файл
+    /// </summary>
+    /// <param name="file">Аудио файл (Only FLAC, WAV, ALAC, and MP3)</param>
+    /// <param name="songFileInfo">Информация об исполнителе и песне</param>
+    /// <returns></returns>
     [HttpPost("upload")]
+    [ProducesResponseType<List<SongFile>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> UploadFile(IFormFile? file, [FromQuery] SongFileUploadDto songFileInfo)
     {
         if (file == null || file.Length == 0)
@@ -34,7 +54,7 @@ public class SongUploadController : ControllerBase
         await _minioService.UploadFileAsync(objectName, stream, file.ContentType);
 
         var filePath = objectName; 
-            // _minioService.GetFileUrl(objectName);
+        
         var musicFile = new SongFile()
         {
             Title = songFileInfo.Title,
