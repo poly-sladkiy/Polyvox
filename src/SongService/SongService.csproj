@@ -22,4 +22,8 @@
       <Folder Include="wwwroot\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Result\Result.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -2,7 +2,6 @@
 using SongService.Interfaces;
 using SongService.Models;
 using SongService.Models.Dtos.SongUploadControllerModels;
-using SongService.Services;
 
 namespace SongService.Controllers;
 
@@ -10,21 +9,22 @@ namespace SongService.Controllers;
 [Route("/api/[controller]/[action]")]
 public class SongFileStorageController : ControllerBase
 {
-    private readonly MinioService _minioService;
     private readonly ISongFileRepository _songFileRepository;
+    private readonly ISongFileStorageService _songFileStorageService;
 
-    public SongFileStorageController(MinioService minioService, ISongFileRepository songFileRepository)
+    public SongFileStorageController(ISongFileRepository songFileRepository,
+        ISongFileStorageService songFileStorageService)
     {
-        _minioService = minioService;
         _songFileRepository = songFileRepository;
+        _songFileStorageService = songFileStorageService;
     }
-    
+
     /// <summary>
     /// Получить файлы аудиозаписей
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [ProducesResponseType<List<SongFile>>(StatusCodes.Status200OK)]
+    [ProducesResponseType<SongFile>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetSongs()
     {
         var songs = await _songFileRepository.GetAsync();
@@ -35,38 +35,23 @@ public class SongFileStorageController : ControllerBase
     /// <summary>
     /// Загрузить файл
     /// </summary>
-    /// <param name="file">Аудио файл (Only FLAC, WAV, ALAC, and MP3)</param>
-    /// <param name="songFileInfo">Информация об исполнителе и песне</param>
+    /// <param name="songFile">Аудио файл (Only FLAC, WAV, ALAC, and MP3) с информацией о нем</param>
     /// <returns></returns>
     [HttpPost("upload")]
-    [ProducesResponseType<List<SongFile>>(StatusCodes.Status200OK)]
-    public async Task<IActionResult> UploadFile(IFormFile? file, [FromQuery] SongFileUploadDto songFileInfo)
+    [ProducesResponseType<SongFileUploadResponseDto>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> UploadFile([FromForm] SongFileUploadRequestDto songFile)
     {
-        if (file == null || file.Length == 0)
+        if (songFile.File.Length == 0)
             return BadRequest("No file uploaded.");
 
-        var fileExtension = Path.GetExtension(file.FileName).ToLower();
-        if (fileExtension != ".flac" && fileExtension != ".wav" && fileExtension != ".mp3" && fileExtension != ".alac")
-            return BadRequest("Only FLAC, WAV, ALAC, and MP3 files are allowed.");
+        var musicFileResult = await _songFileStorageService.StoreSongFile(songFile);
 
-        var objectName = $"{Guid.NewGuid()}{fileExtension}";
-        await using var stream = file.OpenReadStream();
-        await _minioService.UploadFileAsync(objectName, stream, file.ContentType);
+        if (musicFileResult.IsSuccess)
+            return Ok(new SongFileUploadResponseDto(
+                musicFileResult.Value.Id,
+                musicFileResult.Value.Title,
+                musicFileResult.Value.FilePath));
 
-        var filePath = objectName; 
-        
-        var musicFile = new SongFile()
-        {
-            Title = songFileInfo.Title,
-            Artist = songFileInfo.Artist,
-            Album = songFileInfo.Album,
-            FilePath = filePath,
-            Size = file.Length,
-            Format = fileExtension
-        };
-
-        await _songFileRepository.CreateAsync(musicFile);
-
-        return Ok(new { musicFile.Id, musicFile.Title, musicFile.FilePath });
+        return BadRequest(musicFileResult.Error.Message);
     }
 }

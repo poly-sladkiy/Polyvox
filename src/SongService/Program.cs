@@ -18,6 +18,7 @@ builder.Services.AddSingleton<MinioService>();
 builder.Services.AddSingleton<MongoConnectionService>();
 
 builder.Services.AddScoped<ISongFileRepository, SongFileRepository>();
+builder.Services.AddScoped<ISongFileStorageService, SongFileStorageService>();
 
 var minioSection = builder.Configuration.GetSection("Minio");
 
@@ -31,7 +32,6 @@ builder.Services.AddMinio(configureClient => configureClient
     .WithCredentials(minioAccessKey, minioSecretKey)
     .WithSSL(false)
     .Build());
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
