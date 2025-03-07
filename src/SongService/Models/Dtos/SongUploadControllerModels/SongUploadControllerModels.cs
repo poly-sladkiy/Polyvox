@@ -1,6 +1,6 @@
 ﻿namespace SongService.Models.Dtos.SongUploadControllerModels;
 
-public class SongFileUploadDto
+public record SongFileUploadDto
 {
     public required string Title { get; set; }
     public required string Artist { get; set; }
