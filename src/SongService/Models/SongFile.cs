@@ -1,8 +1,8 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
 namespace SongService.Models;
 
+[BsonIgnoreExtraElements]
 public class SongFile : BaseEntity
 {
     public string Title { get; set; } = string.Empty;

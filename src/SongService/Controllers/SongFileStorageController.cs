@@ -8,12 +8,12 @@ namespace SongService.Controllers;
 
 [ApiController]
 [Route("/api/[controller]/[action]")]
-public class SongFileController : ControllerBase
+public class SongFileStorageController : ControllerBase
 {
     private readonly MinioService _minioService;
     private readonly ISongFileRepository _songFileRepository;
 
-    public SongFileController(MinioService minioService, ISongFileRepository songFileRepository)
+    public SongFileStorageController(MinioService minioService, ISongFileRepository songFileRepository)
     {
         _minioService = minioService;
         _songFileRepository = songFileRepository;
