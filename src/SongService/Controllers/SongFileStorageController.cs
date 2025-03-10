@@ -39,6 +39,7 @@ public class SongFileStorageController : ControllerBase
     /// <returns></returns>
     [HttpPost("upload")]
     [ProducesResponseType<SongFileUploadResponseDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UploadFile([FromForm] SongFileUploadRequestDto songFile)
     {
         if (songFile.File.Length == 0)
@@ -52,6 +53,9 @@ public class SongFileStorageController : ControllerBase
                 musicFileResult.Value.Title,
                 musicFileResult.Value.FilePath));
 
-        return BadRequest(musicFileResult.Error.Message);
+        return ValidationProblem(new ValidationProblemDetails()
+        {
+            Detail = musicFileResult.Error.Message,
+        });
     }
 }
