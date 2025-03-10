@@ -1,13 +1,12 @@
-﻿using Microsoft.Extensions.Options;
-using Minio;
+﻿using Minio;
 using Minio.DataModel.Args;
 
 namespace SongService.Services;
 
 public class MinioService
 {
-    private readonly IMinioClient _minioClient;
     private readonly string _bucketName;
+    private readonly IMinioClient _minioClient;
 
     public MinioService(IMinioClient minioClient, IConfiguration configuration)
     {
@@ -29,19 +28,19 @@ public class MinioService
         memoryStream.Position = 0; // Reset stream position for reading
         return memoryStream;
     }
-    
+
     public async Task UploadFileAsync(string objectName, Stream data, string contentType)
     {
         // Make a bucket on the server, if not already present.
         var beArgs = new BucketExistsArgs().WithBucket(_bucketName);
-        bool found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
+        var found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
         if (!found)
         {
             var mbArgs = new MakeBucketArgs()
                 .WithBucket(_bucketName);
             await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
         }
-        
+
         var args = new PutObjectArgs()
             .WithBucket(_bucketName)
             .WithObject(objectName)
@@ -51,5 +50,4 @@ public class MinioService
 
         await _minioClient.PutObjectAsync(args).ConfigureAwait(false);
     }
-
 }

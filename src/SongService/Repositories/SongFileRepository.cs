@@ -7,6 +7,8 @@ namespace SongService.Repositories;
 
 public class SongFileRepository : BaseRepository<SongFile>, ISongFileRepository
 {
-    public SongFileRepository(MongoConnectionService connectionService, IOptions<MongoConnectionSettings> settings) 
-        : base(connectionService, settings.Value.SongCollectionName) { }
+    public SongFileRepository(MongoConnectionService connectionService, IOptions<MongoConnectionSettings> settings)
+        : base(connectionService, settings.Value.SongCollectionName)
+    {
+    }
 }

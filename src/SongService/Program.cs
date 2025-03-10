@@ -44,8 +44,8 @@ builder.Services.AddSwaggerGen(options =>
         Description = "An Web API for managing song files",
         Contact = new OpenApiContact
         {
-            Name = "Poly",
-        },
+            Name = "Poly"
+        }
     });
 
     // using System.Reflection;

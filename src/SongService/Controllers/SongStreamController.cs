@@ -16,7 +16,7 @@ public class SongStreamController : ControllerBase
         _minioService = minioService;
         _songFileRepository = songFileRepository;
     }
-    
+
     [HttpGet("{id}")]
     public async Task<IActionResult> StreamAudio(string id)
     {
@@ -29,9 +29,9 @@ public class SongStreamController : ControllerBase
         var fileName = $"{musicFile.Artist} - {musicFile.Title}{musicFile.Format}";
         var contentType = GetContentType(musicFile.Format);
 
-        return File(stream, contentType, fileDownloadName: fileName, enableRangeProcessing: true);
+        return File(stream, contentType, fileName, true);
     }
-    
+
     private string GetContentType(string format)
     {
         return format switch

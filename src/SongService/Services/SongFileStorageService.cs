@@ -30,7 +30,7 @@ public class SongFileStorageService : ISongFileStorageService
 
         var filePath = objectName;
 
-        var musicFile = new SongFile()
+        var musicFile = new SongFile
         {
             Title = songFile.Title,
             Artist = songFile.Artist,

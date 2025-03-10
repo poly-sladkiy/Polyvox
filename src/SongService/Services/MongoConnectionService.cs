@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using SongService.Models;
-using SongService.Repositories;
 
 namespace SongService.Services;
 
@@ -16,5 +15,7 @@ public class MongoConnectionService
     }
 
     public IMongoCollection<T> GetCollection<T>(string name, MongoCollectionSettings? settings = null)
-        => _mongoDatabase.GetCollection<T>(name, settings);
+    {
+        return _mongoDatabase.GetCollection<T>(name, settings);
+    }
 }

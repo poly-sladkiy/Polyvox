@@ -20,7 +20,7 @@ public class SongFileStorageController : ControllerBase
     }
 
     /// <summary>
-    /// Получить файлы аудиозаписей
+    ///     Получить файлы аудиозаписей
     /// </summary>
     /// <returns></returns>
     [HttpGet]
@@ -33,7 +33,7 @@ public class SongFileStorageController : ControllerBase
     }
 
     /// <summary>
-    /// Загрузить файл
+    ///     Загрузить файл
     /// </summary>
     /// <param name="songFile">Аудио файл (Only FLAC, WAV, ALAC, and MP3) с информацией о нем</param>
     /// <returns></returns>
@@ -53,9 +53,9 @@ public class SongFileStorageController : ControllerBase
                 musicFileResult.Value.Title,
                 musicFileResult.Value.FilePath));
 
-        return ValidationProblem(new ValidationProblemDetails()
+        return ValidationProblem(new ValidationProblemDetails
         {
-            Detail = musicFileResult.Error.Message,
+            Detail = musicFileResult.Error.Message
         });
     }
 }
