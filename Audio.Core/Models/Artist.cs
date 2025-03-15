@@ -6,13 +6,13 @@ public class Artist
 {
 	public string Name { get; private set; }
 	public string[] Genres { get; private set; }
-	
+
 	private List<Album> _albums;
 
 	public ReadOnlyCollection<Album> Albums
 	{
-		get => _albums.AsReadOnly(); 
-		private set => _albums = _albums.ToList();
+		get => _albums.AsReadOnly();
+		private set => _albums = value.ToList();
 	}
 
 	public Artist(string name, string[] genres, List<Album> albums)
