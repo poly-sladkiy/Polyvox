@@ -1,4 +1,4 @@
-﻿namespace SongService.Interfaces;
+﻿namespace AudioFileService.Interfaces;
 
 public interface IBaseRepository<TEntity>
 {

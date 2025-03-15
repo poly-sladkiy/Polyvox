@@ -1,10 +1,10 @@
-﻿using Result;
-using SongService.Exceptions;
-using SongService.Interfaces;
-using SongService.Models;
-using SongService.Models.Dtos.SongUploadControllerModels;
+﻿using AudioFileService.Exceptions;
+using AudioFileService.Interfaces;
+using AudioFileService.Models;
+using AudioFileService.Models.Dtos.SongUploadControllerModels;
+using Result;
 
-namespace SongService.Services;
+namespace AudioFileService.Services;
 
 public class SongFileStorageService : ISongFileStorageService
 {

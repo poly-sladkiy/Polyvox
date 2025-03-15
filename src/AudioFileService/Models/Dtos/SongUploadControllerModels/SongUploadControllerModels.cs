@@ -1,4 +1,4 @@
-﻿namespace SongService.Models.Dtos.SongUploadControllerModels;
+﻿namespace AudioFileService.Models.Dtos.SongUploadControllerModels;
 
 public record SongFileUploadDto
 {

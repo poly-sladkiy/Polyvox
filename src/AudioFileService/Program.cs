@@ -1,10 +1,10 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Minio;
-using SongService.Interfaces;
-using SongService.Models;
-using SongService.Repositories;
-using SongService.Services;
+using AudioFileService.Interfaces;
+using AudioFileService.Models;
+using AudioFileService.Repositories;
+using AudioFileService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,7 +1,7 @@
 ﻿using Minio;
 using Minio.DataModel.Args;
 
-namespace SongService.Services;
+namespace AudioFileService.Services;
 
 public class MinioService
 {

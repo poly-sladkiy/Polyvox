@@ -1,9 +1,9 @@
-﻿using MongoDB.Driver;
-using SongService.Interfaces;
-using SongService.Models;
-using SongService.Services;
+﻿using AudioFileService.Interfaces;
+using AudioFileService.Models;
+using AudioFileService.Services;
+using MongoDB.Driver;
 
-namespace SongService.Repositories;
+namespace AudioFileService.Repositories;
 
 public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
 {

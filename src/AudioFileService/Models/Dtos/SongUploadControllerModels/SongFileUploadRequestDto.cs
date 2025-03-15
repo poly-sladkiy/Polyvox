@@ -1,4 +1,4 @@
-﻿namespace SongService.Models.Dtos.SongUploadControllerModels;
+﻿namespace AudioFileService.Models.Dtos.SongUploadControllerModels;
 
 /// <summary>
 ///     Модель информации об аудио записи

@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace SongService.Models;
+namespace AudioFileService.Models;
 
 [BsonIgnoreExtraElements]
 public class SongFile : BaseEntity

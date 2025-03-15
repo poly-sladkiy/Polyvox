@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Options;
-using SongService.Interfaces;
-using SongService.Models;
-using SongService.Services;
+﻿using AudioFileService.Interfaces;
+using AudioFileService.Models;
+using AudioFileService.Services;
+using Microsoft.Extensions.Options;
 
-namespace SongService.Repositories;
+namespace AudioFileService.Repositories;
 
 public class SongFileRepository : BaseRepository<SongFile>, ISongFileRepository
 {

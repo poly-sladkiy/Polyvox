@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace SongService.Models;
+namespace AudioFileService.Models;
 
 public class BaseEntity
 {

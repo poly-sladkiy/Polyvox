@@ -1,4 +1,4 @@
-﻿namespace SongService.Models;
+﻿namespace AudioFileService.Models;
 
 public class MongoConnectionSettings
 {

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SongService.Interfaces;
-using SongService.Models;
-using SongService.Models.Dtos.SongUploadControllerModels;
+﻿using AudioFileService.Interfaces;
+using AudioFileService.Models;
+using AudioFileService.Models.Dtos.SongUploadControllerModels;
+using Microsoft.AspNetCore.Mvc;
 
-namespace SongService.Controllers;
+namespace AudioFileService.Controllers;
 
 [ApiController]
 [Route("/api/[controller]/[action]")]
