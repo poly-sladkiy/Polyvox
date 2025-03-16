@@ -1,15 +1,20 @@
 using System.Reflection;
+using Audio.Persistence;
 using Microsoft.OpenApi.Models;
 using Minio;
 using AudioFileService.Interfaces;
 using AudioFileService.Models;
 using AudioFileService.Repositories;
 using AudioFileService.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+string connection = builder.Configuration.GetConnectionString("AudioDatabase")!;
+builder.Services.AddDbContext<AudioDbContext>(options => options.UseNpgsql(connection));
 
 builder.Services.Configure<MongoConnectionSettings>(
     builder.Configuration.GetSection(MongoConnectionSettings.Position));
@@ -54,6 +59,23 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AudioDbContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    
+    try
+    {
+        db.Database.Migrate();
+        logger.LogInformation("Migrated DB");
+    }
+    catch (Exception e)
+    {
+        logger.LogCritical(e, "An error occurred while seeding the database.");
+        throw;
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
