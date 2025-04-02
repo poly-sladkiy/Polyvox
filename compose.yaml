@@ -7,9 +7,11 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=QWERasdfzxcv1234
+      - POSTGRES_PASSWORD=QWERasdfzxcv1234POIklasjdhflktrewtNG
       - PGDATA=/data/pgdata/
       - POSTGRES_USER=audio_service
+    volumes:
+      - .containers/postgres/:/data/pgdata/
  
   minio:
     container_name: minio
