@@ -2,7 +2,6 @@ using System.Reflection;
 using Audio.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Audio.Information.Api.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,7 +62,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapArtistEntityEndpoints();
 
 app.Run();
