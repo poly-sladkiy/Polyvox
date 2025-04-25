@@ -5,5 +5,5 @@ namespace AccountSystem.WebApi.Services;
 
 public interface IAccountService
 {
-	Result<Account> Create(string? email, string? userName, string? password);
+	Task<Result<Account>> Create(string? email, string? userName, string? password);
 }

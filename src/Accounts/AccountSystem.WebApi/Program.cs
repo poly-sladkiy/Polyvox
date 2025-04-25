@@ -1,12 +1,22 @@
+using System.Net;
 using System.Reflection;
 using AccountSystem.WebApi.Services;
+using Cassandra;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IEmailValidationService, EmailValidationService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddSingleton<Cluster>((_) => Cluster.Builder()
+	.AddContactPoint(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9042))
+	.WithCredentials("cassandra", "cassandra")
+	.Build()
+);
+builder.Services.AddScoped<Cassandra.ISession>((serviceProvider) => serviceProvider.GetService<Cluster>()!.Connect());
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 

@@ -28,9 +28,9 @@ public class AccountController : ControllerBase
 	[HttpPost]
 	[ProducesResponseType<Account>(StatusCodes.Status200OK)]
 	[ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
-	public IActionResult Create(CreateAccountDtoRequest request)
+	public async Task<IActionResult> Create(CreateAccountDtoRequest request)
 	{
-		var accountCreationResult = _accountService.Create(request.Email, request.UserName, request.Password);
+		var accountCreationResult = await _accountService.Create(request.Email, request.UserName, request.Password);
 		if (accountCreationResult.IsSuccess)
 			return Ok(accountCreationResult.Value);
 

@@ -1,12 +1,12 @@
 using System.Reflection;
 using Audio.Persistence;
-using Microsoft.OpenApi.Models;
-using Minio;
 using AudioFileService.Interfaces;
 using AudioFileService.Models;
 using AudioFileService.Repositories;
 using AudioFileService.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Minio;
 
 var builder = WebApplication.CreateBuilder(args);
 
